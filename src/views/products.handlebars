@@ -1,0 +1,15 @@
+<main>
+    <h1> Bienvenid@ {{info}}</h1>
+    <a href="/user/details">Ir a mi perfil</a>
+    <form action="/api/sessions/logout" method="">
+        <button>Logout</button>
+    </form>
+    
+    <h2>LISTA DE PRODUCTOS</h2>
+    <ul>
+        {{#each products}}
+            <li>{{this.title}}: ${{this.price}}</li>
+            <br>
+        {{/each}}
+    </ul>
+</main>
