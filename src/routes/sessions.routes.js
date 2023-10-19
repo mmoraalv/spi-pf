@@ -8,7 +8,7 @@ const sessionRouter = Router();
 //Session
 sessionRouter.get('/logout', (req,res) => {
     try {
-        if (req.session.login){
+        if (req.session){
             req.session.destroy();
         }
         res.redirect("/static/login");
