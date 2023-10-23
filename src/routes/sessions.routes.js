@@ -1,5 +1,7 @@
 import { Router } from "express";
 import passport from "passport";
+import { passportError, authorization } from "../utils/messageErrors.js";
+import { generateToken } from "../utils/jwt.js";
 
 const sessionRouter = Router();
 
@@ -32,6 +34,10 @@ sessionRouter.get('/testJWT', passport.authenticate('jwt', { session: true }), a
         age: req.user.user.age,
         email: req.user.user.email
     }
+})
+
+sessionRouter.get('/current', passportError('jwt'), authorization('user'), (req, res) => {
+    res.send(req.user)
 })
 
 sessionRouter.get('/github', passport.authenticate('github', { scope: ['user:email'] }), async (req, res) => {
