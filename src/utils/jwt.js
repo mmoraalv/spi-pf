@@ -7,11 +7,11 @@ export const generateToken = (user) => {
         2° parametro: Clave privada para el cifrado
         3° parametro: Tiempo de expiracion
     */
-    const token = jwt.sign({ user }, "coderhouse123", { expiresIn: '12h' })
+    const token = jwt.sign({ user }, "mma3546", { expiresIn: '12h' })
     return token
 }
 
-
+console.log(generateToken({"_id":"6535ff81173241f390588a3b","first_name":"Mario","last_name":"Mora","email":"mario@mora.com","password":"$2b$15$lWp2f8OiZ84v3k9s0M.M7.OaEn7DSDegKrbiSCTzIfujckEbdmPZ6","rol":"user","age":{"$numberInt":"33"}}))
 
 export const authToken = (req, res, next) => {
     //Consulto el header

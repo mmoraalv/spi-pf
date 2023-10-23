@@ -117,7 +117,7 @@ const initializePassport = () => {
 
     //Inicializar la session del usr
     passport.serializeUser((user, done) => {
-        done(null, user._id)
+        done(null, user.user._id)
     })
 
     //Eliminar la session del usr

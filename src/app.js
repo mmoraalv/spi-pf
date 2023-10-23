@@ -5,10 +5,7 @@ import { engine } from 'express-handlebars'
 import { Server } from 'socket.io'
 import { __dirname } from './path.js'
 import path from 'path'
-import productRouter from './routes/products.routes.js'
-import cartRouter from './routes/carts.routes.js'
-import sessionRouter from './routes/sessions.routes.js'
-import userRouter from './routes/users.routes.js'
+import router from './routes/index.routes.js';
 import routerHandlebars from './routes/views.routes.js'
 import passport from 'passport'
 import cookieParser from 'cookie-parser'
@@ -36,7 +33,7 @@ const server = app.listen(PORT,()=>{
 //Middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); //URL extensas
-app.use(cookieParser(process.env.SIGNED_SECRET)) //Firmo la cookie
+app.use(cookieParser(process.env.JWT_SECRET)) //Firmo la cookie
 app.use(session({
     store: MongoStore.create({
         mongoUrl: process.env.MONGO_URL,
@@ -77,11 +74,7 @@ app.set('views', path.resolve(__dirname, './views'))
 //Rutas
 app.use('/static', express.static(path.join(__dirname, '/public')));
 app.use('/static', routerHandlebars);
-app.use('/api/products', productRouter);
-app.use('/api/carts', cartRouter);
-app.use('/api/sessions', sessionRouter);
-app.use('/api/users', userRouter);
-
+app.use('/', router);
 
 //Cookies
 /*app.get('/setCookie', (req, res) => {
