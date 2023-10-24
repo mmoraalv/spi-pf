@@ -58,6 +58,7 @@ sessionRouter.get('/logout', (req,res) => {
             req.session.destroy();
         }
         res.clearCookie('jwtCookie')
+        res.status(200).send({ resultado: 'Login eliminado' })
         //res.redirect("/static/login");
     } catch (error) {
         res.status(400).send({ error: `Error al terminar sesion: ${error} `});

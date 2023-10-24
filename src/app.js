@@ -18,7 +18,7 @@ const PORT = 8080;
 const app = express();
 
 //Conexión con bd Mongo
-mongoose.connect('mongodb+srv://mmoraalvz2:mma$223$@cluster0.a8nxh9t.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect(process.env.MONGO_URL)
     .then(() => console.log("DB conectada"))
     //await cartModel.create({})
     .catch((error) => console.log("Error en conexion a MongoDB Atlas: ", error))
