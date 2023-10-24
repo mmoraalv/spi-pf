@@ -1,21 +1,25 @@
-import {Schema, model} from "mongoose";
-
-//definir schemas
-const stringRequired = {
-    type: String,
-    required: true
-}
+import { Schema, model } from "mongoose";
+import cartModel from "./carts.models.js";
 
 const userSchema = new Schema({
-    first_name: stringRequired,
-    last_name: stringRequired,
+    first_name: {
+        type: String,
+        required: true
+    },
+    last_name: {
+        type: String,
+        required: true
+    },
     email: {
         type: String,
-        unique: true,
         required: true,
-        index: true
+        index: true,
+        unique: true
     },
-    password: stringRequired,
+    password: {
+        type: String,
+        required: true
+    },
     rol: {
         type: String,
         default: 'user'
@@ -23,7 +27,23 @@ const userSchema = new Schema({
     age: {
         type: Number,
         required: true
+    },
+    cart: {
+        type: Schema.Types.ObjectId,
+        ref: 'carts'
     }
 })
+
+userSchema.pre('save', async function (next) {
+
+    try {
+        const newCart = await cartModel.create({})
+        this.cart = newCart._id
+    } catch (error) {
+        next(error)
+    }
+
+})
+
 
 export const userModel = model('users', userSchema)

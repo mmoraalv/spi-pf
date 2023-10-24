@@ -19,7 +19,10 @@ sessionRouter.post('/login', passport.authenticate('login'), async (req, res) =>
             age: req.user.age,
             email: req.user.email
         }
-
+        const token = generateToken(req.user)
+        res.cookie('jwtCookie', token, {
+            maxAge: 43200000
+        })
         res.status(200).send({ payload: req.user })
     } catch (error) {
         res.status(500).send({ mensaje: `Error al iniciar sesion ${error}` })
@@ -54,7 +57,8 @@ sessionRouter.get('/logout', (req,res) => {
         if (req.session){
             req.session.destroy();
         }
-        res.redirect("/static/login");
+        res.clearCookie('jwtCookie')
+        //res.redirect("/static/login");
     } catch (error) {
         res.status(400).send({ error: `Error al terminar sesion: ${error} `});
     }
